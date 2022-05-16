@@ -53,6 +53,7 @@ private:
 	// VBO
 	GLuint m_VBORect = 0;
 	GLuint m_VBOLecture2 = 0;
+	GLuint m_VBOLecture3_2 = 0;
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
