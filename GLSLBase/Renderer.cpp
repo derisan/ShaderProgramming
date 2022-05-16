@@ -60,13 +60,21 @@ void Renderer::CreateVertexBufferObjects()
 	float rect[]
 		=
 	{
-		-0.5, -0.5, 0.f, -0.5, 0.5, 0.f, 0.5, 0.5, 0.f, //Triangle1
-		-0.5, -0.5, 0.f,  0.5, 0.5, 0.f, 0.5, -0.5, 0.f, //Triangle2
+		-0.5, -0.5, 0.f, 0.5, 0.5, 0.f, -0.5, 0.5, 0.f, //Triangle1
+		-0.5, -0.5, 0.f,  0.5, -0.5, 0.f, 0.5, 0.5, 0.f, //Triangle2
 	};
 
 	glGenBuffers(1, &m_VBORect);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(rect), rect, GL_STATIC_DRAW);
+
+	float lecture2[] = {
+		0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f
+	};
+
+	glGenBuffers(1, &m_VBOLecture2);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(lecture2), lecture2, GL_STATIC_DRAW);
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -304,6 +312,20 @@ void Renderer::Test()
 	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
+}
+
+void Renderer::Lecture2()
+{
+	glUseProgram(m_SolidRectShader);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture2);
+
+	int attribPosition = glGetAttribLocation(m_SolidRectShader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(attribPosition);
 }
