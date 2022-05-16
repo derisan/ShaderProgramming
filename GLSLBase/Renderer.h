@@ -22,6 +22,7 @@ public:
 	   
 	void Test();
 	void Lecture2();
+	void Lecture3();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -55,5 +56,6 @@ private:
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
+	GLuint m_Lecture3Shader = 0;
 };
 
