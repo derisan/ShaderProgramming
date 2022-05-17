@@ -135,7 +135,7 @@ void Renderer::CreateParticle(int count)
 		randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
 		randomValueVZ = 0.f;
 		randomEmitTime = ((float)rand() / (float)RAND_MAX) * 5.f;
-		randomLifeTime = ((float)rand() / (float)RAND_MAX) * 2.f;
+		randomLifeTime = ((float)rand() / (float)RAND_MAX) * 0.5f;
 
 		//v0
 		particleVertices[index] = -particleSize / 2.f + randomValueX;
@@ -569,7 +569,7 @@ void Renderer::Lecture3_3()
 	int uniformAccel = glGetUniformLocation(shader, "u_Accel");
 	glUniform3f(uniformAccel, std::sin(time), std::cos(time), 0.0f);
 
-	time += 0.00001f;
+	time += 0.0001f;
 
 	glDrawArrays(GL_TRIANGLES, 0, m_VBOManyParticleVertexCount);
 }
