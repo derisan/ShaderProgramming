@@ -28,6 +28,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	//Load shaders
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
 	m_Lecture3Shader = CompileShaders("./Shaders/Lecture3.vs", "./Shaders/Lecture3.fs");
+	m_ParticleShader = CompileShaders("./Shaders/Particle3_3.vs", "./Shaders/Particle3_3.fs");
 	
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -89,6 +90,102 @@ void Renderer::CreateVertexBufferObjects()
 	glGenBuffers(1, &m_VBOLecture3_2);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture3_2);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(lecture3), lecture3, GL_STATIC_DRAW);
+
+	// Lecture 3-3. Particle
+	float particleSize = 0.1f;
+	float lecture3_3[] = {
+		-particleSize, -particleSize, 0.0f, 1, 1, 1, 1,
+		particleSize, particleSize, 0.0f, 1, 1, 1, 1,
+		-particleSize, particleSize, 0.0f, 1, 1, 1, 1,
+		-particleSize, -particleSize, 0.0f, 1, 1, 1, 1,
+		particleSize, -particleSize, 0.0f, 1, 1, 1, 1,
+		particleSize, particleSize, 0.0f, 1, 1, 1, 1
+	};
+
+	glGenBuffers(1, &m_VBOLecture3_3);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOLecture3_3);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(lecture3_3), lecture3_3, GL_STATIC_DRAW);
+
+	// Many particle
+	CreateParticle(1000);
+}
+
+void Renderer::CreateParticle(int count)
+{		
+	int floatCount = count * (3) * 3 * 2; //(x, y, z)
+	float* particleVertices = new float[floatCount];
+	int vertexCount = count * 3 * 2;
+	int index = 0;
+	float particleSize = 0.01f;
+	for (int i = 0; i < count; i++)
+	{
+		float randomValueX = 0.f;
+		float randomValueY = 0.f;
+		float randomValueZ = 0.f;
+		float randomValueVX = 0.f;
+		float randomValueVY = 0.f;
+		float randomValueVZ = 0.f;
+		randomValueX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		randomValueY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		randomValueZ = 0.f;
+		randomValueVX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		randomValueVZ = 0.f;
+		//v0
+		particleVertices[index] = -particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = -particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++; //Position XYZ
+
+		//v1
+		particleVertices[index] = particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = -particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++;
+
+		//v2
+		particleVertices[index] = particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++;
+		
+		
+		//v3
+		particleVertices[index] = -particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = -particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++;
+		
+		//v4
+		particleVertices[index] = particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++;
+		
+		//v5
+		particleVertices[index] = -particleSize / 2.f + randomValueX;
+		index++;
+		particleVertices[index] = particleSize / 2.f + randomValueY;
+		index++;
+		particleVertices[index] = 0.f;
+		index++;
+		
+	}
+	glGenBuffers(1, &m_VBOManyParticle);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * floatCount, particleVertices, GL_STATIC_DRAW);
+	m_VBOManyParticleVertexCount = vertexCount;
+	delete[] particleVertices;
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -370,4 +467,18 @@ void Renderer::Lecture3()
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+void Renderer::Lecture3_3()
+{
+	GLuint shader = m_ParticleShader;
+
+	glUseProgram(shader);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, FALSE, sizeof(float) * 3, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, m_VBOManyParticleVertexCount);
 }

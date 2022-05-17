@@ -23,6 +23,7 @@ public:
 	void Test();
 	void Lecture2();
 	void Lecture3();
+	void Lecture3_3();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -31,6 +32,9 @@ private:
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
 	void CreateVertexBufferObjects(); 
 	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
+
+	// count : quad의 개수
+	void CreateParticle(int count);
 
 	bool m_Initialized = false;
 	
@@ -50,13 +54,19 @@ private:
 	glm::mat4 m_m4View;
 	glm::mat4 m_m4ProjView;
 
+	// 파티클 Vertex 개수
+	GLuint m_VBOManyParticleVertexCount = 0;
+
 	// VBO
 	GLuint m_VBORect = 0;
 	GLuint m_VBOLecture2 = 0;
 	GLuint m_VBOLecture3_2 = 0;
+	GLuint m_VBOLecture3_3 = 0;
+	GLuint m_VBOManyParticle = 0;
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
 	GLuint m_Lecture3Shader = 0;
+	GLuint m_ParticleShader = 0;
 };
 
