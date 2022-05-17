@@ -25,7 +25,7 @@ void main()
 		t = fraction * a_LifeTime; // fraction의 값은 0~1 사이가 반복
 		tt = t * t;
 
-		newPos = a_Position + u_Time * a_Velocity + 0.5 * u_Accel * tt;
+		newPos = a_Position + t * a_Velocity + 0.5 * u_Accel * tt;
 	}
 	else
 	{
