@@ -6,6 +6,7 @@ in float a_EmitTime;
 in float a_LifeTime;
 in float a_Amp;
 in float a_Period;
+in float a_RandomValue;
 
 uniform float u_Time;
 uniform vec3 u_Accel;
@@ -24,12 +25,16 @@ void main()
 
 	if(t > 0)
 	{
+		newPos.x = a_Position.x + sin(a_RandomValue * 2 * PI);
+		newPos.y = a_Position.y + cos(a_RandomValue * 2 * PI);
+		newPos.z = 0;
+
 		float temp = t / a_LifeTime;
 		float fraction = fract(temp); // 소수점 아래의 부분만 추출
 		t = fraction * a_LifeTime; // fraction의 값은 0~1 사이가 반복
 		tt = t * t;
 
-		newPos = a_Position + t * a_Velocity + 0.5 * u_Accel * tt;
+		newPos = newPos + t * a_Velocity + 0.5 * u_Accel * tt;
 
 		vec3 rotVec = normalize(a_Velocity * g_RotMat);
 
