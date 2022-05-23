@@ -29,7 +29,7 @@ void main()
 		tt = t * t;
 
 		newPos.x = a_Position.x + t * a_Velocity.x + 0.5 * u_Accel.x * tt;
-		newPos.y = a_Position.y + a_Amp * sin(a_Period * t * 2 * PI);
+		newPos.y = a_Position.y + (t * a_Amp) * sin(a_Period * t * 2 * PI);
 		newPos.z = 0.0f;
 	}
 	else
