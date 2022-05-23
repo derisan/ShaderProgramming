@@ -12,6 +12,7 @@ uniform vec3 u_Accel;
 
 bool bLoop = true;
 float PI = 3.14f;
+mat3 g_RotMat = mat3(0, -1, 0, 1, 0, 0, 0, 0, 0);
 
 void main()
 {
@@ -28,8 +29,11 @@ void main()
 		t = fraction * a_LifeTime; // fraction의 값은 0~1 사이가 반복
 		tt = t * t;
 
-		newPos.x = a_Position.x + t * a_Velocity.x + 0.5 * u_Accel.x * tt;
-		newPos.y = a_Position.y + (t * a_Amp) * sin(a_Period * t * 2 * PI);
+		newPos = a_Position + t * a_Velocity + 0.5 * u_Accel * tt;
+
+		vec3 rotVec = normalize(a_Velocity * g_RotMat);
+
+		newPos = newPos + a_Amp * rotVec * t * sin(a_Period * t * 2 * PI);
 		newPos.z = 0.0f;
 	}
 	else
