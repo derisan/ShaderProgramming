@@ -7,6 +7,9 @@ in float a_LifeTime;
 in float a_Amp;
 in float a_Period;
 in float a_RandomValue;
+in vec4 a_Color;
+
+out vec4 v_Color;
 
 uniform float u_Time;
 uniform vec3 u_Accel;
@@ -14,7 +17,7 @@ uniform vec3 u_Accel;
 bool bLoop = true;
 float PI = 3.14f;
 mat3 g_RotMat = mat3(0, -1, 0, 1, 0, 0, 0, 0, 0);
-const vec3 g_Gravity = vec3(0, -2.0, 0);
+const vec3 g_Gravity = vec3(0, -0.5, 0);
 
 void main()
 {
@@ -43,10 +46,14 @@ void main()
 
 		newPos = newPos + a_Amp * rotVec * t * sin(a_Period * t * 2 * PI);
 		newPos.z = 0.0f;
+
+		v_Color = a_Color * (1.0 - fraction);
 	}
 	else
 	{
 		newPos = vec3(-10000);
+
+		v_Color = vec4(0);
 	}
 
 	gl_Position = vec4(newPos, 1);
