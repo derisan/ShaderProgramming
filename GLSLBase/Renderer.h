@@ -27,6 +27,7 @@ public:
 	void Lecture4_FSSandbox();
 	void Lecture4_Raindrop();
 	void Lecture4_Radar();
+	void Lecture5_LineSegment();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -38,6 +39,8 @@ private:
 
 	// count : quad의 개수
 	void CreateParticle(int count);
+
+	void CreateLine(int segCount);
 
 	bool m_Initialized = false;
 	
@@ -59,6 +62,7 @@ private:
 
 	// 파티클 Vertex 개수
 	GLuint m_VBOManyParticleVertexCount = 0;
+	GLuint m_VBOLineSegmentCount = 0;
 
 	// VBO
 	GLuint m_VBORect = 0;
@@ -67,11 +71,13 @@ private:
 	GLuint m_VBOLecture3_3 = 0;
 	GLuint m_VBOManyParticle = 0;
 	GLuint m_VBOSandbox = 0;
+	GLuint m_VBOLineSegment = 0;
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
 	GLuint m_Lecture3Shader = 0;
 	GLuint m_ParticleShader = 0;
 	GLuint m_FSSandboxShader = 0;
+	GLuint m_LineSegmentShader = 0;
 };
 
