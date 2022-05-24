@@ -16,7 +16,7 @@ Renderer::Renderer(int windowSizeX, int windowSizeY)
 
 Renderer::~Renderer()
 {
-	
+
 }
 
 void Renderer::Initialize(int windowSizeX, int windowSizeY)
@@ -29,7 +29,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
 	m_Lecture3Shader = CompileShaders("./Shaders/Lecture3.vs", "./Shaders/Lecture3.fs");
 	m_ParticleShader = CompileShaders("./Shaders/Particle3_3.vs", "./Shaders/Particle3_3.fs");
-	
+	m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
+
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -108,10 +109,24 @@ void Renderer::CreateVertexBufferObjects()
 
 	// Many particle
 	CreateParticle(1000);
+
+	float rectSize = 0.5f;
+	float sandbox[] = {
+		-rectSize, -rectSize, 0.0f, 1, 1, 1, 1,
+		rectSize, rectSize, 0.0f, 1, 1, 1, 1,
+		-rectSize, rectSize, 0.0f, 1, 1, 1, 1,
+		-rectSize, -rectSize, 0.0f, 1, 1, 1, 1,
+		rectSize, -rectSize, 0.0f, 1, 1, 1, 1,
+		rectSize, rectSize, 0.0f, 1, 1, 1, 1
+	};
+
+	glGenBuffers(1, &m_VBOSandbox);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOSandbox);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(sandbox), sandbox, GL_STATIC_DRAW);
 }
 
 void Renderer::CreateParticle(int count)
-{		
+{
 	int floatCount = count * (3 + 3 + 2 + 2 + 1 + 4) * 3 * 2; //(x, y, z, vx, vy, vz, emit, life, amp, period, random value, r, g, b, a)
 	float* particleVertices = new float[floatCount];
 	int vertexCount = count * 3 * 2;
@@ -243,8 +258,8 @@ void Renderer::CreateParticle(int count)
 		index++;
 		particleVertices[index] = randomA;
 		index++;
-		
-		
+
+
 		//v3
 		particleVertices[index] = -particleSize / 2.f + randomValueX;
 		index++;
@@ -308,7 +323,7 @@ void Renderer::CreateParticle(int count)
 		index++;
 		particleVertices[index] = randomA;
 		index++;
-		
+
 		//v5
 		particleVertices[index] = -particleSize / 2.f + randomValueX;
 		index++;
@@ -340,7 +355,7 @@ void Renderer::CreateParticle(int count)
 		index++;
 		particleVertices[index] = randomA;
 		index++;
-		
+
 	}
 	glGenBuffers(1, &m_VBOManyParticle);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
@@ -384,7 +399,7 @@ void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum S
 	glAttachShader(ShaderProgram, ShaderObj);
 }
 
-bool Renderer::ReadFile(char* filename, std::string *target)
+bool Renderer::ReadFile(char* filename, std::string* target)
 {
 	std::ifstream file(filename);
 	if (file.fail())
@@ -458,7 +473,7 @@ GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 
 	return ShaderProgram;
 }
-unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight)
+unsigned char* Renderer::loadBMPRaw(const char* imagepath, unsigned int& outWidth, unsigned int& outHeight)
 {
 	std::cout << "Loading bmp file " << imagepath << " ... " << std::endl;
 	outWidth = -1;
@@ -468,10 +483,10 @@ unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWi
 	unsigned int dataPos;
 	unsigned int imageSize;
 	// Actual RGB data
-	unsigned char * data;
+	unsigned char* data;
 
 	// Open the file
-	FILE * file = NULL;
+	FILE* file = NULL;
 	fopen_s(&file, imagepath, "rb");
 	if (!file)
 	{
@@ -525,7 +540,7 @@ unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWi
 	return data;
 }
 
-GLuint Renderer::CreatePngTexture(char * filePath)
+GLuint Renderer::CreatePngTexture(char* filePath)
 {
 	//Load Pngs: Load file and decode image.
 	std::vector<unsigned char> image;
@@ -549,11 +564,11 @@ GLuint Renderer::CreatePngTexture(char * filePath)
 	return temp;
 }
 
-GLuint Renderer::CreateBmpTexture(char * filePath)
+GLuint Renderer::CreateBmpTexture(char* filePath)
 {
 	//Load Bmp: Load file and decode image.
 	unsigned int width, height;
-	unsigned char * bmp
+	unsigned char* bmp
 		= loadBMPRaw(filePath, width, height);
 
 	if (bmp == NULL)
@@ -683,4 +698,19 @@ void Renderer::Lecture3_3()
 	time += 0.0003f;
 
 	glDrawArrays(GL_TRIANGLES, 0, m_VBOManyParticleVertexCount);
+}
+
+void Renderer::Lecture4_FSSandbox()
+{
+	GLuint shader = m_FSSandboxShader;
+	glUseProgram(shader);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOSandbox);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
 }

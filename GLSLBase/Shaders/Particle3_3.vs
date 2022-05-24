@@ -29,7 +29,7 @@ void main()
 
 	if(t > 0)
 	{
-		vec3 newAccel = g_Gravity + u_Accel;
+		vec3 newAccel = g_Gravity + a_Velocity;
 
 		newPos.x = a_Position.x + sin(a_RandomValue * 2 * PI);
 		newPos.y = a_Position.y + cos(a_RandomValue * 2 * PI);
