@@ -5,6 +5,7 @@ in vec4 v_Color;
 out vec4 FragColor;
 
 uniform vec3 u_Points[10];
+uniform float u_Time;
 
 const float PI = 3.14;
 
@@ -58,10 +59,15 @@ vec4 DrawMultipleCircles(int numCircle)
 vec4 DrawCircles()
 {
 	vec4 returnColor = vec4(0);
-	float dist = distance(u_Points[0].xy, v_Color.xy);
 
-	if(dist < 0.1)
-		returnColor = vec4(1);
+	for(int i =0 ; i < 10 ; ++i)
+	{
+		float dist = distance(u_Points[i].xy, v_Color.xy);
+		float temp = sin(10 * dist * 4 * PI - u_Time * 100);
+
+		if(dist < u_Time)
+			returnColor += vec4(temp);
+	}
 
 	return returnColor;
 }

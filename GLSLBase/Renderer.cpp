@@ -734,6 +734,8 @@ float g_Points[] = {
 
 void Renderer::Lecture4_Raindrop()
 {
+	static float time = 0.0f;
+
 	GLuint shader = m_FSSandboxShader;
 	glUseProgram(shader);
 
@@ -744,6 +746,11 @@ void Renderer::Lecture4_Raindrop()
 
 	int uniformPoints = glGetUniformLocation(shader, "u_Points");
 	glUniform3fv(uniformPoints, 10, g_Points);
+
+	int uniformTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uniformTime, time);
+
+	time += 0.001f;
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
