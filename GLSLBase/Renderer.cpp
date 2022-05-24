@@ -131,7 +131,7 @@ void Renderer::CreateParticle(int count)
 	float* particleVertices = new float[floatCount];
 	int vertexCount = count * 3 * 2;
 	int index = 0;
-	float particleSize = 0.01f;
+	float particleSize = 0.1f;
 	for (int i = 0; i < count; i++)
 	{
 		float randomValueX = 0.f;
@@ -651,6 +651,9 @@ void Renderer::Lecture3_3()
 
 	GLuint shader = m_ParticleShader;
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glUseProgram(shader);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
 
@@ -698,6 +701,7 @@ void Renderer::Lecture3_3()
 	time += 0.0003f;
 
 	glDrawArrays(GL_TRIANGLES, 0, m_VBOManyParticleVertexCount);
+	glDisable(GL_BLEND);
 }
 
 void Renderer::Lecture4_FSSandbox()
