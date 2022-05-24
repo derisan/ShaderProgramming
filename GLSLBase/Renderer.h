@@ -25,6 +25,7 @@ public:
 	void Lecture3();
 	void Lecture3_3();
 	void Lecture4_FSSandbox();
+	void Lecture4_Raindrop();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);

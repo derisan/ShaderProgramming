@@ -718,3 +718,34 @@ void Renderer::Lecture4_FSSandbox()
 
 	glDisableVertexAttribArray(attribPosition);
 }
+
+float g_Points[] = {
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f,
+	((float)rand() / (float)RAND_MAX), ((float)rand() / (float)RAND_MAX), 0.0f
+};
+
+void Renderer::Lecture4_Raindrop()
+{
+	GLuint shader = m_FSSandboxShader;
+	glUseProgram(shader);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOSandbox);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
+
+	int uniformPoints = glGetUniformLocation(shader, "u_Points");
+	glUniform3fv(uniformPoints, 10, g_Points);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
+}
