@@ -44,9 +44,19 @@ vec4 DrawCircle()
 	return newColor;
 }
 
+vec4 DrawMultipleCircles(int numCircle)
+{
+	float dist = distance(v_Color.xy, vec2(0.5));
+	float temp = sin(numCircle * dist * 4 * PI);
+
+	vec4 newColor = vec4(temp);
+	return newColor;
+}
+
 void main()
 {
-	FragColor = CrossPattern(5);
+	//FragColor = CrossPattern(5);
 	//FragColor = DrawDonut();
 	//FragColor = DrawCircle();
+	FragColor = DrawMultipleCircles(1);
 }
