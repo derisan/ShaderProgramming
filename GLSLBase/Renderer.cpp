@@ -756,3 +756,28 @@ void Renderer::Lecture4_Raindrop()
 
 	glDisableVertexAttribArray(attribPosition);
 }
+
+void Renderer::Lecture4_Radar()
+{
+	static float time = 0.0f;
+
+	GLuint shader = m_FSSandboxShader;
+	glUseProgram(shader);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOSandbox);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
+
+	int uniformPoints = glGetUniformLocation(shader, "u_Points");
+	glUniform3fv(uniformPoints, 10, g_Points);
+
+	int uniformTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uniformTime, time);
+
+	time += 0.001f;
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
+}
