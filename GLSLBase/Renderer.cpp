@@ -31,6 +31,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_ParticleShader = CompileShaders("./Shaders/Particle3_3.vs", "./Shaders/Particle3_3.fs");
 	m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
 	m_LineSegmentShader = CompileShaders("./Shaders/LineSegment.vs", "./Shaders/LineSegment.fs");
+	m_FullRectShader = CompileShaders("./Shaders/FullRect.vs", "./Shaders/FullRect.fs");
 
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -124,6 +125,20 @@ void Renderer::CreateVertexBufferObjects()
 	glGenBuffers(1, &m_VBOSandbox);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOSandbox);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(sandbox), sandbox, GL_STATIC_DRAW);
+
+	float fSize = 1.0f;
+	float fullRect[] = {
+		-fSize, -fSize, 0.0f,
+		fSize, fSize, 0.0f,
+		-fSize, fSize, 0.0f,
+		-fSize, -fSize, 0.0f,
+		fSize, -fSize, 0.0f,
+		fSize, fSize, 0.0f,
+	};
+
+	glGenBuffers(1, &m_VBOFullRect);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFullRect);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(fullRect), fullRect, GL_STATIC_DRAW);
 
 	CreateLine(100);
 }
@@ -824,4 +839,24 @@ void Renderer::Lecture5_LineSegment()
 	time += 0.01f;
 
 	glDrawArrays(GL_LINE_STRIP, 0, m_VBOLineSegmentCount);
+}
+
+void Renderer::Lecture5_FullRect()
+{
+	static float time = 0.0f;
+
+	GLuint shader = m_FullRectShader;
+	glUseProgram(shader);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFullRect);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
+	int uniformTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uniformTime, time);
+
+	time += 0.01f;
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
