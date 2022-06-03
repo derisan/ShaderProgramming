@@ -157,6 +157,7 @@ void Renderer::CreateVertexBufferObjects()
 	CreateLine(100);
 
 	m_SampleTexture = CreatePngTexture("SmileFace.png");
+	m_RGBTexture = CreatePngTexture("rgb.png");
 }
 
 void Renderer::CreateParticle(int count)
@@ -894,7 +895,7 @@ void Renderer::Lecture6_Sandbox()
 	int uniformTex = glGetUniformLocation(shader, "u_TexSampler");
 	glUniform1i(uniformTex, 0);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_SampleTexture);
+	glBindTexture(GL_TEXTURE_2D, m_RGBTexture);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
