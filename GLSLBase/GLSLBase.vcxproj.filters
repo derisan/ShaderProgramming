@@ -32,37 +32,43 @@
     <None Include="Shaders\SolidRect.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\SolidRect.fs">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shaders\Lecture3.fs">
+    <None Include="Shaders\Lecture3.ps">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\Lecture3.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\Particle3_3.fs">
+    <None Include="Shaders\Particle3_3.ps">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\Particle3_3.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FSSandbox.fs">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="Shaders\FSSandbox.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\LineSegment.fs">
+    <None Include="Shaders\LineSegment.ps">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\LineSegment.vs">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shaders\FullRect.fs">
+    <None Include="Shaders\FullRect.ps">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shaders\FullRect.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\TextureSandbox.ps">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\TextureSandbox.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\FSSandbox.ps">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\SolidRect.ps">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

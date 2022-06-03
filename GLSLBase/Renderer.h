@@ -29,6 +29,7 @@ public:
 	void Lecture4_Radar();
 	void Lecture5_LineSegment();
 	void Lecture5_FullRect();
+	void Lecture6_Sandbox();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -74,6 +75,7 @@ private:
 	GLuint m_VBOSandbox = 0;
 	GLuint m_VBOLineSegment = 0;
 	GLuint m_VBOFullRect = 0;
+	GLuint m_VBOTexSandbox = 0;
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
@@ -82,5 +84,9 @@ private:
 	GLuint m_FSSandboxShader = 0;
 	GLuint m_LineSegmentShader = 0;
 	GLuint m_FullRectShader = 0;
+	GLuint m_TexSandboxShader = 0;
+
+	// Texture
+	GLuint m_SampleTexture = 0;
 };
 

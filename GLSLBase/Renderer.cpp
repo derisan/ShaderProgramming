@@ -26,12 +26,13 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_WindowSizeY = windowSizeY;
 
 	//Load shaders
-	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
-	m_Lecture3Shader = CompileShaders("./Shaders/Lecture3.vs", "./Shaders/Lecture3.fs");
-	m_ParticleShader = CompileShaders("./Shaders/Particle3_3.vs", "./Shaders/Particle3_3.fs");
-	m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
-	m_LineSegmentShader = CompileShaders("./Shaders/LineSegment.vs", "./Shaders/LineSegment.fs");
-	m_FullRectShader = CompileShaders("./Shaders/FullRect.vs", "./Shaders/FullRect.fs");
+	//m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.ps");
+	//m_Lecture3Shader = CompileShaders("./Shaders/Lecture3.vs", "./Shaders/Lecture3.ps");
+	//m_ParticleShader = CompileShaders("./Shaders/Particle3_3.vs", "./Shaders/Particle3_3.ps");
+	//m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.ps");
+	//m_LineSegmentShader = CompileShaders("./Shaders/LineSegment.vs", "./Shaders/LineSegment.ps");
+	//m_FullRectShader = CompileShaders("./Shaders/FullRect.vs", "./Shaders/FullRect.ps");
+	m_TexSandboxShader = CompileShaders("./Shaders/TextureSandbox.vs", "./Shaders/TextureSandbox.ps");
 
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -140,7 +141,22 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOFullRect);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(fullRect), fullRect, GL_STATIC_DRAW);
 
+	float texSandbox[] = {
+		-rectSize, -rectSize, 0.0f, 0, 0,
+		rectSize, rectSize, 0.0f, 1, 1,
+		-rectSize, rectSize, 0.0f, 0, 1,
+		-rectSize, -rectSize, 0.0f, 0, 0,
+		rectSize, -rectSize, 0.0f, 1, 0,
+		rectSize, rectSize, 0.0f, 1, 1
+	};
+
+	glGenBuffers(1, &m_VBOTexSandbox);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTexSandbox);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texSandbox), texSandbox, GL_STATIC_DRAW);
+
 	CreateLine(100);
+
+	m_SampleTexture = CreatePngTexture("SmileFace.png");
 }
 
 void Renderer::CreateParticle(int count)
@@ -857,6 +873,28 @@ void Renderer::Lecture5_FullRect()
 	glUniform1f(uniformTime, time);
 
 	time += 0.01f;
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::Lecture6_Sandbox()
+{
+	GLuint shader = m_TexSandboxShader;
+	glUseProgram(shader);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTexSandbox);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+
+	int attribTexCoord = glGetAttribLocation(shader, "a_TexCoord");
+	glEnableVertexAttribArray(attribTexCoord);
+	glVertexAttribPointer(attribTexCoord, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(sizeof(float) * 3));
+
+	int uniformTex = glGetUniformLocation(shader, "u_TexSampler");
+	glUniform1i(uniformTex, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_SampleTexture);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
