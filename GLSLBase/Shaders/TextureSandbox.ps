@@ -16,7 +16,17 @@ vec4 Flip()
 	return returnValue;
 }
 
+vec4 P1()
+{
+	vec4 returnValue = vec4(0);
+	vec2 newTexCoord = vec2(0);
+	newTexCoord.x = v_TexCoord.x;
+	newTexCoord.y = abs((v_TexCoord.y - 0.5) * 2);
+	returnValue = texture(u_TexSampler, newTexCoord);
+	return returnValue;
+}
+
 void main()
 {
-	FragColor = Flip();
+	FragColor = P1();
 }
