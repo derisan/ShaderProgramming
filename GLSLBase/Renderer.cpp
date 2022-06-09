@@ -430,8 +430,8 @@ void Renderer::CreateDummyMesh()
 	float targetPosX = 0.5f;
 	float targetPosY = 0.5f;
 
-	int pointCountX = 8;
-	int pointCountY = 8;
+	int pointCountX = 32;
+	int pointCountY = 32;
 
 	float width = targetPosX - basePosX;
 	float height = targetPosY - basePosY;
@@ -997,6 +997,9 @@ void Renderer::Lecture6_Sandbox()
 
 void Renderer::Lecture9()
 {
+
+	static float time = 0.0f;
+
 	GLuint shader = m_DummyMeshShader;
 	glUseProgram(shader);
 
@@ -1004,6 +1007,11 @@ void Renderer::Lecture9()
 	glEnableVertexAttribArray(attribPosition);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBODummyMesh);
 	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
+	int uniformTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uniformTime, time);
+
+	time += 0.05f;
 
 	glDrawArrays(GL_LINE_STRIP, 0, m_DummyVertexCount);
 }
