@@ -2,7 +2,11 @@
 
 in vec3 a_Position;
 
+const float PI = 3.14159;
+
 void main()
 {
-	gl_Position = vec4(a_Position, 1);
+	vec3 newPos = a_Position;
+	newPos.y += 0.5 * sin((a_Position.x + 0.5) * 2 * PI);
+	gl_Position = vec4(newPos, 1);
 }
