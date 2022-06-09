@@ -880,6 +880,8 @@ void Renderer::Lecture5_FullRect()
 
 void Renderer::Lecture6_Sandbox()
 {
+	static float time = 0.0f;
+
 	GLuint shader = m_TexSandboxShader;
 	glUseProgram(shader);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOTexSandbox);
@@ -901,6 +903,11 @@ void Renderer::Lecture6_Sandbox()
 	glUniform1i(uniformTex, 1);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, m_SampleTexture);
+
+	int uniformTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(uniformTime, time);
+
+	time += 0.01f;
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
