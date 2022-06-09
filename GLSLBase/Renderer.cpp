@@ -897,5 +897,10 @@ void Renderer::Lecture6_Sandbox()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_RGBTexture);
 
+	uniformTex = glGetUniformLocation(shader, "u_TexSampler2");
+	glUniform1i(uniformTex, 1);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_SampleTexture);
+
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
