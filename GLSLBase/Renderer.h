@@ -30,6 +30,7 @@ public:
 	void Lecture5_LineSegment();
 	void Lecture5_FullRect();
 	void Lecture6_Sandbox();
+	void Lecture9();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -43,6 +44,8 @@ private:
 	void CreateParticle(int count);
 
 	void CreateLine(int segCount);
+
+	void CreateDummyMesh();
 
 	bool m_Initialized = false;
 	
@@ -65,6 +68,7 @@ private:
 	// 파티클 Vertex 개수
 	GLuint m_VBOManyParticleVertexCount = 0;
 	GLuint m_VBOLineSegmentCount = 0;
+	GLuint m_DummyVertexCount = 0;
 
 	// VBO
 	GLuint m_VBORect = 0;
@@ -76,6 +80,7 @@ private:
 	GLuint m_VBOLineSegment = 0;
 	GLuint m_VBOFullRect = 0;
 	GLuint m_VBOTexSandbox = 0;
+	GLuint m_VBODummyMesh = 0;
 	
 	// Shader
 	GLuint m_SolidRectShader = 0;
@@ -85,6 +90,7 @@ private:
 	GLuint m_LineSegmentShader = 0;
 	GLuint m_FullRectShader = 0;
 	GLuint m_TexSandboxShader = 0;
+	GLuint m_DummyMeshShader = 0;
 
 	// Texture
 	GLuint m_SampleTexture = 0;

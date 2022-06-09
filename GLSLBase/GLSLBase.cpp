@@ -35,7 +35,8 @@ void RenderScene(void)
 	//g_Renderer->Lecture4_Radar();
 	//g_Renderer->Lecture5_LineSegment();
 	//g_Renderer->Lecture5_FullRect();
-	g_Renderer->Lecture6_Sandbox();
+	//g_Renderer->Lecture6_Sandbox();
+	g_Renderer->Lecture9();
 
 	glutSwapBuffers();
 }

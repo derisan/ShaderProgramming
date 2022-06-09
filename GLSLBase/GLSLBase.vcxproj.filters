@@ -71,6 +71,12 @@
     <None Include="Shaders\SolidRect.ps">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Shaders\DummyMesh.ps">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shaders\DummyMesh.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
