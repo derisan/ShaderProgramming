@@ -32,7 +32,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	//m_FSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.ps");
 	//m_LineSegmentShader = CompileShaders("./Shaders/LineSegment.vs", "./Shaders/LineSegment.ps");
 	//m_FullRectShader = CompileShaders("./Shaders/FullRect.vs", "./Shaders/FullRect.ps");
-	//m_TexSandboxShader = CompileShaders("./Shaders/TextureSandbox.vs", "./Shaders/TextureSandbox.ps");
+	m_TexSandboxShader = CompileShaders("./Shaders/TextureSandbox.vs", "./Shaders/TextureSandbox.ps");
 	m_DummyMeshShader = CompileShaders("./Shaders/DummyMesh.vs", "./Shaders/DummyMesh.ps");
 
 	//Create VBOs

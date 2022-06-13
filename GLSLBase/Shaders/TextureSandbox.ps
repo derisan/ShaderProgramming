@@ -69,6 +69,16 @@ vec4 P3()
 	return returnValue;
 }
 
+vec4 P3_2()
+{
+	vec4 returnValue = vec4(0);
+	vec2 newTexCoord = vec2(0);
+	newTexCoord.x = fract(v_TexCoord.x * 2);
+	newTexCoord.y = floor(v_TexCoord.x * 2) * 0.5 + fract(v_TexCoord.y * 2);
+	returnValue = texture(u_TexSampler, newTexCoord);
+	return returnValue;
+}
+
 vec4 P4()
 {
 	vec4 returnValue = vec4(0);
@@ -94,5 +104,5 @@ vec4 P5()
 
 void main()
 {
-	FragColor = P5();
+	FragColor = P3_2();
 }
