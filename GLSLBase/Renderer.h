@@ -31,6 +31,7 @@ public:
 	void Lecture5_FullRect();
 	void Lecture6_Sandbox();
 	void Lecture9();
+	void Lecture11();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -47,7 +48,9 @@ private:
 
 	void CreateDummyMesh();
 
-	void CreateFBOs();
+	void CreateFBO(GLuint& texID, GLuint& depthID, GLuint& frameID);
+
+	void DrawFullScreenTexture(GLuint texID);
 
 	bool m_Initialized = false;
 	
