@@ -522,6 +522,7 @@ void Renderer::CreateFBOs()
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 	glGenFramebuffers(1, &m_FBO0);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FBO0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_FBOTexture0, 0);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_RBDepth0);
 
@@ -531,6 +532,8 @@ void Renderer::CreateFBOs()
 		std::cout << "Failed to gen frame buffer!\n";
 		exit(-1);
 	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
